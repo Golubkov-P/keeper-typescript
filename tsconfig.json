@@ -1,0 +1,14 @@
+{
+	"files": [
+        "js/app.ts",
+        "js/Controller.ts",
+        "js/View.ts",
+        "js/Model.ts",
+        "js/store.ts",
+        "js/template.ts"
+  ],
+  "compilerOptions": {
+     "target": "es5",
+     "noImplicitAny": true
+  }
+}
