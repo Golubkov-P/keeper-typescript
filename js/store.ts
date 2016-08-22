@@ -3,7 +3,7 @@ export class Store {
 	constructor(name: string) {
 		this.name = name;
 	}
-	add(content:any) {
+	add(content:any): void {
 		if ( localStorage.getItem(this.name) ) {
 			let myStore = (<any>JSON).parse(localStorage.getItem(this.name));
 			myStore.push(content);
@@ -15,12 +15,16 @@ export class Store {
 		}
 	}
 
-	del(content:any) {
+	del(id:string): void {
 		let myStore = (<any>JSON).parse(localStorage.getItem(this.name));
-		let deletedItem = content;
+		let deletedId = id;
 		let newStore = myStore.filter((item: any) => {
-			return item.id !== deletedItem.id
+			return item.id !== deletedId
 		});
 		localStorage.setItem(this.name, (<any>JSON).stringify(newStore));
+	}
+	get(): any {
+		let content = (<any>JSON).parse(localStorage.getItem(this.name));
+		return content
 	}
 }

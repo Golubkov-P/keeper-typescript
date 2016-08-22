@@ -5,7 +5,8 @@
         "js/View.ts",
         "js/Model.ts",
         "js/store.ts",
-        "js/template.ts"
+        "js/template.ts",
+        "js/masonry-layout.d.ts"
   ],
   "compilerOptions": {
      "target": "es5",

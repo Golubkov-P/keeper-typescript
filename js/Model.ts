@@ -6,7 +6,10 @@ export class Model {
 	save(content: any): void {
 		this.Store.add(content);
 	}
-	remove(content: any): void {
-		this.Store.del(content);
+	del(id: string): void {
+		this.Store.del(id);
+	}
+	get():any {
+		return this.Store.get();
 	}
 }
