@@ -79,14 +79,14 @@ body {
 	position: relative;
 }
 
-.input-wrapper--title {
-	font-size: 20px;
-}
-
-.input-text {
+.input-text__title, .input-text__text {
 	position: absolute;
 	pointer-events: none;
 	left: 10px;
+}
+
+.input-text__title {
+	font-size: 20px;
 }
 
 #add-button {
@@ -99,19 +99,11 @@ body {
 	font-size: 18px;
 	color: #fff;
 	box-shadow: 6px 6px 19px #A5A5A5;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
 
 #add-button:hover {
 	box-shadow: none;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
 
@@ -126,8 +118,6 @@ body {
 	width: 100%;
 	max-width: 1100px;
 	padding: 0 15px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	margin: 0 auto;
 }
@@ -136,8 +126,6 @@ body {
 	width: 100%;
 	height: 50px;
 	margin: 15px 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -197,26 +185,25 @@ body {
 	font-size: 18px;
 	color: #fff;
 	box-shadow: 6px 6px 19px #A5A5A5;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
 
 #modal-open:hover {
 	box-shadow: none;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
+}
+
+.default-text {
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+	color: #BCBCBC;
 }
 
 .note-grid {
 	 width: 25%;
 	 margin: 10px 0;
-}
+} 
 
 .note-sizing {
 	width: 25%;

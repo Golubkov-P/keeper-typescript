@@ -19,33 +19,59 @@ export class View {
 		this.modalClose = document.getElementById('modal-close');
 	}
 
-	addNote(item:any): any {
-			let self = this;
-			let Note = document.createElement('div');
-
-			Note.className = 'note-grid';
-			Note.innerHTML = self.template.createNote(item);
-			self.notesBlock.insertBefore(Note, self.notesBlock.firstChild);
+	default(): any {
+		let helper: any = function(type: string, props: any, children: any) {
+			return { type: type, props: props, children: children }
+		}
+		const t = (helper('div', {className: 'default-text'}, ['Note list is empty']));
+		return t
 	}
 
-	deleteNote(item: HTMLElement):any {
+	note(data: any, event:any): any {
 		let self = this;
-		let element = item.parentNode;
-		self.notesBlock.removeChild(element);
+		let helper: any = function(type: string, props: any, children: any) {
+			return { type: type, props: props, children: children }
+		}
+		const t = (
+			helper('div', {className: 'note-grid', key: data.id}, [
+				helper('div', {className: 'note'}, [
+					helper('div', { className: 'note-close', onClick: (e:any) => { event(e.path[3]); } }, [
+						helper('i', {className: 'fa fa-close'}, [''])
+					]),
+					helper('div', {className: 'note__title'}, [
+						data.title
+					]),
+					helper('div', {className: 'note__text'}, [
+						data.text
+					])
+				])
+			])
+		);
+		return t
 	}
 
-	addEvent(event: string, handler: any): any {
+	addElement(parent:HTMLElement, template: any): void {
 		let self = this;
+		let newChild = self.template.createElement(template);
+		self.template.render(parent, newChild);
+		self.modal.className = 'modal';
+	}
 
+	deleteElement(parent:HTMLElement, item: HTMLElement): void {
+		let self = this;
+		parent.removeChild(item);
+	}
+
+	addEvent(event: string, handler: any): void {
+		let self = this;
 		if (event === 'addNote') {
-			let button = self.button;
-
-			button.addEventListener('click', function() { 
+			self.button.addEventListener('click', function() { 
 				let inputTextValue = self.inputText.innerText;
 				let inputTitleValue = self.inputTitle.innerText;
 
-				if (inputTextValue !== '' && inputTitleValue !== '') {
-
+				if (inputTextValue.length !== 0 && inputTitleValue.length !== 0) {
+					let phTitle:Element = document.querySelector('.input-text__title');
+					let phText:Element = document.querySelector('.input-text__text');
 					handler({
 						id: Date.now(),
 						title: inputTitleValue,
@@ -54,25 +80,48 @@ export class View {
 
 					self.inputText.innerText = '';
 					self.inputTitle.innerText = '';
+					phTitle.setAttribute('style', '');
+					phText.setAttribute('style', '');
 				}
-
+			});
+			self.inputTitle.addEventListener('input', function(e) {
+					let placeholder:Element = document.querySelector('.input-text__title');
+					if (self.inputTitle.innerText.length !== 0 ) {
+						placeholder.setAttribute('style', 'display: none');
+					} else {
+						placeholder.setAttribute('style', '');
+					}
+			});
+			self.inputTitle.addEventListener('keydown', function(e) {
+					if (e.key === 'Enter') {
+						e.preventDefault();
+						self.inputText.focus();
+					}
+			});
+			self.inputText.addEventListener('input', function(e) {
+					let placeholder:Element = document.querySelector('.input-text__text');
+					if (self.inputText.innerText.length !== 0 ) {
+						placeholder.setAttribute('style', 'display: none');
+					} else {
+						placeholder.setAttribute('style', '');
+					}
 			});
 
 		} else if (event === 'modal-active') {
 			let modalClass = self.modal.className;
 
 			self.modalOpen.addEventListener('click', function() { 
-				let modal = self.modal;
-				modal.className = modalClass + ' active';
+				self.modal.className = modalClass + ' active';
 			});
 
 			self.modalClose.addEventListener('click', function() { 
-				let modal = self.modal;
-				modal.className = modalClass;
+				self.modal.className = modalClass;
 			});
-
-		} else if (event === 'delete-note') {
-			
+		} else if (event === 'search') {
+			let searchInput:HTMLElement = document.getElementById('search-input');
+			searchInput.addEventListener('input', function(e) {
+				handler((<HTMLSelectElement>e.target).value);
+			});
 		}
 	}
 }

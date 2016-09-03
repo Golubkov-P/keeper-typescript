@@ -17,14 +17,23 @@ export class Store {
 
 	del(id:string): void {
 		let myStore = (<any>JSON).parse(localStorage.getItem(this.name));
-		let deletedId = id;
-		let newStore = myStore.filter((item: any) => {
-			return item.id !== deletedId
-		});
+		let newStore = myStore.filter((item: any) => item.id !== +id);
 		localStorage.setItem(this.name, (<any>JSON).stringify(newStore));
 	}
+
 	get(): any {
 		let content = (<any>JSON).parse(localStorage.getItem(this.name));
 		return content
+	}
+
+	sort(value: string) :any {
+		let myStore = (<any>JSON).parse(localStorage.getItem(this.name));
+		let newStore = myStore.filter((item: any) => {
+			if (item.title.indexOf(value) !== -1 || item.text.indexOf(value) !== -1) {
+				return true
+			}
+			return false
+		});
+		return newStore
 	}
 }

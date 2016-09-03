@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Keeper MVC on TypeScript</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style/main.css">
+	<link rel="stylesheet" href="style/main.min.css">
 	<link rel="stylesheet" href="style/font-awesome.min.css">
 </head>
 <body>
@@ -13,12 +13,12 @@
 			<div id="modal-close" class="modal-close">
 				<i class="fa fa-close" aria-hidden="true"></i>
 			</div>
-			<div class="input-wrapper input-wrapper--title">
-				<div class="input-text">Заголовок заметки</div>
+			<div class="input-wrapper">
+			<div class="input-text__title">Заголовок заметки</div>
 				<div contenteditable="true" id="note-input__title" class="note-input__title"></div>
 			</div>
 			<div class="input-wrapper">
-				<div class="input-text">Текст заметки</div>
+				<div class="input-text__text">Текст заметки</div>
 				<div contenteditable="true" id="note-input__text" class="note-input__text"></div>
 			</div>
 			<button id="add-button"><i class="fa fa-plus" aria-hidden="true"></i></button>

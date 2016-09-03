@@ -12,4 +12,7 @@ export class Model {
 	get():any {
 		return this.Store.get();
 	}
+	sort(value:string) {
+		return this.Store.sort(value);
+	}
 }
