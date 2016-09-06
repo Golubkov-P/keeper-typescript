@@ -1,3 +1,5 @@
+import {DateComponent} from './components/date';
+
 export class Controller {
 	Model: any;
 	View: any;
@@ -10,6 +12,7 @@ export class Controller {
 		this.View = View;
 		this.Masonry = Masonry;
 		self.defaultLoad();
+		self.renderDate();
 		self.View.addEvent('addNote', function(item:any) {
 			self.createNote(item);
 		});
@@ -87,5 +90,13 @@ export class Controller {
 				self.View.addElement(root, template);	
 			});
 		} 
+	}
+
+	renderDate():void {
+		let self = this;
+		let root:HTMLElement = document.getElementById('date-container');
+		let date = new DateComponent();
+		let template = date.renderDate();
+		self.View.addElement(root, template);
 	}
 }
