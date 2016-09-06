@@ -7,6 +7,13 @@ var autoprefixer = require('gulp-autoprefixer');
 var buffer       = require('vinyl-buffer');
 var cssmin       = require('gulp-cssmin');
 var rename       = require('gulp-rename');
+var watch        = require('gulp-watch');
+
+gulp.task('watch', function() {
+  return watch('js/**/*.ts', function () {
+    gulp.run('develop');       
+  }); 
+});
 
 gulp.task("develop", function () {
     return browserify({
