@@ -34,6 +34,6 @@ export class Store {
 			}
 			return false
 		});
-		return newStore
+		return newStore;
 	}
 }

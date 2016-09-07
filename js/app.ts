@@ -1,5 +1,3 @@
-/// <reference path="masonry-layout.d.ts" />
-
 import {Controller} from './Controller';
 import {Model} from './Model';
 import {Store} from './store';
@@ -18,15 +16,9 @@ class Keeper {
 		this.model = new Model(this.store);
 		this.template = new Template();
 		this.view = new View(this.template);
-		this.masonry = new Masonry('#root', {
-			itemSelector: '.note-grid',
-			columnWidth: '.note-sizing',
-			percentPosition: true
-		});
-		this.controller = new Controller(this.model, this.view, this.masonry);
+		this.controller = new Controller(this.model, this.view);
 	}
 }
-
 let KeeperApp = new Keeper();
 
 

@@ -59,7 +59,7 @@ export class DateComponent {
 		return months[month] + ' ' + year;
 	}
 
-	renderDate():any {
+	render():any {
 		let helper: any = function(type: string, props: any, children: any) {
 			return { type: type, props: props, children: children }
 		};

@@ -19,37 +19,6 @@ export class View {
 		this.modalClose = document.getElementById('modal-close');
 	}
 
-	default(): any {
-		let helper: any = function(type: string, props: any, children: any) {
-			return { type: type, props: props, children: children }
-		}
-		const t = (helper('div', {className: 'default-text'}, ['Note list is empty']));
-		return t
-	}
-
-	note(data: any, event:any): any {
-		let self = this;
-		let helper: any = function(type: string, props: any, children: any) {
-			return { type: type, props: props, children: children }
-		}
-		const t = (
-			helper('div', {className: 'note-grid', key: data.id}, [
-				helper('div', {className: 'note'}, [
-					helper('div', { className: 'note-close', onClick: (e:any) => { event(e.path[3]); } }, [
-						helper('i', {className: 'fa fa-close'}, [''])
-					]),
-					helper('div', {className: 'note__title'}, [
-						data.title
-					]),
-					helper('div', {className: 'note__text'}, [
-						data.text
-					])
-				])
-			])
-		);
-		return t
-	}
-
 	addElement(parent:HTMLElement, template: any): void {
 		let self = this;
 		let newChild = self.template.createElement(template);
