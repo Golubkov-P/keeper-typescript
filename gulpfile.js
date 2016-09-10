@@ -8,11 +8,23 @@ var buffer       = require('vinyl-buffer');
 var cssmin       = require('gulp-cssmin');
 var rename       = require('gulp-rename');
 var watch        = require('gulp-watch');
+var browserSync  = require('browser-sync');
+var runSequence  = require('run-sequence');
 
 gulp.task('watch', function() {
-  return watch('js/**/*.ts', function () {
-    gulp.run('develop');       
-  }); 
+  browserSync.init({
+    server: {
+      baseDir: "./dist"
+    }
+  });
+
+  watch('js/**/*.ts', function () {
+    runSequence('develop', browserSync.reload);  
+  });
+
+  watch('css/**/*.css', function () {
+    runSequence('style', browserSync.reload);  
+  });  
 });
 
 gulp.task("develop", function () {

@@ -17,12 +17,19 @@ export class Store {
 
 	del(id:string): void {
 		let myStore = (<any>JSON).parse(localStorage.getItem(this.name));
-		let newStore = myStore.filter((item: any) => item.id !== +id);
+		let newStore = myStore.filter((item: any) => {
+			let itemID = item.id.toString();
+			let currentID = id.toString(); 
+			return itemID !== currentID
+		});
 		localStorage.setItem(this.name, (<any>JSON).stringify(newStore));
 	}
 
 	get(): any {
-		let content = (<any>JSON).parse(localStorage.getItem(this.name));
+		let content:any[] = [];
+		if (localStorage.getItem(this.name)) {
+			content = (<any>JSON).parse(localStorage.getItem(this.name));
+		}
 		return content
 	}
 

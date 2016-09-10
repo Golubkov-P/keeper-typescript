@@ -2,137 +2,99 @@
 
 import {DateComponent} from './components/date';
 import {Note} from './components/note';
-import {NoteList} from './components/note-list';
 import {DefaultItem} from './components/default';
+import {NoteList} from './components/note-list';
+import {Modal} from './components/modal';
+import {AddNoteForm} from './components/addNoteForm';
 
 export class Controller {
 	Model: any;
-	View: any;
 	Masonry: any;
-	emmitEvent: any;
-	default: any;
-	constructor(Model:any, View: any) {
-		let self = this;
+	constructor(Model:any) {
 		this.Model = Model;
-		this.View = View;
-		self.defaultLoad();
+		this.appLoading();
 		this.Masonry = new Masonry('#root', {
 			itemSelector: '.note-grid',
 			columnWidth: '.note-sizing',
 			percentPosition: true
 		});
-		self.layout();
-		self.renderDate();
-		self.View.addEvent('addNote', function(item:any) {
-			self.createNote(item);
-		});
-		self.View.addEvent('modal-active');
-		self.View.addEvent('search', function(value:string) {
-			self.searchNote(value);
-		});
 	}
 
-	defaultLoad(): any {
-		let self = this;
-		let app = document.getElementById('app');
+	appLoading():any {
 		let noteList = new NoteList();
-		let content: any[] = self.Model.get() || [];
-		self.View.addElement(app, noteList.render());
+		let date = new DateComponent();
+		let content = this.Model.get();
+		this.modalControl();
+		this.addSearchEvent(noteList);
 
 		if (content.length === 0) {
-			let defaultItem = new DefaultItem();
-			let template = defaultItem.render();
-			let parent = document.getElementById('root');
-
-			self.View.addElement(parent, template);
-
+			let item = new DefaultItem();
 			return
 		}
-		content.map(function(item) {
-			let note = new Note();
-			let template = note.render(item, self.deleteNote.bind(self));
-			let parent = document.getElementById('root');
 
-			self.View.addElement(parent, template);
+		content.map((elem:any) => {
+			let item = new Note(elem, this.deleteNote.bind(this));
 		});
 	}
 
-	layout():void {
-		let self = this;
-		self.Masonry.reloadItems();
-		self.Masonry.layout();
-	}
-
-	createNote(item: any): void {
-		let self = this;
-		let note = new Note();
-		let template = note.render(item, self.deleteNote.bind(self));
-		let root:HTMLElement = document.getElementById('root');
+	addNote(elem: any): void {
+		let root = document.getElementById('root');
 		let defaultContainer:Element = document.querySelector('.default-text');
-		if (defaultContainer ) {
+		if ( defaultContainer ) {
 			root.removeChild(defaultContainer);
 		}
-
-		self.View.addElement(root, template);
-		self.Model.save(item);
-
-		self.Masonry.reloadItems();
-		self.Masonry.layout();
+		let item = new Note(elem, this.deleteNote.bind(this));
+		this.Model.save(elem);
+		this.layoutReload();
 	}
 
 	deleteNote(item: HTMLElement): void {
-		let self = this;
-		let root:HTMLElement = document.getElementById('root');
-
-		self.View.deleteElement(root, item);
-		self.Model.del(item.getAttribute('key'));
-
-		let content: any[] = self.Model.get();
+		let content: any[] = [];
+		this.Model.del(item.getAttribute('key'));
+		content = this.Model.get();
 		if (content.length === 0) {
-			let defaultItem = new DefaultItem();
-			let template = defaultItem.render();
-			self.View.addElement(root, template);
+			let item = new DefaultItem();
 		}
-
-		self.Masonry.reloadItems();
-		self.Masonry.layout();
+		this.layoutReload();
 	}
 
-	hideNote(item: HTMLElement) {
-		let self = this;
-		let root:HTMLElement = document.getElementById('root');
-		self.View.deleteElement(root, item);
-	}
-
-	searchNote(value: string) :void {
-		let self = this;
-		let root:HTMLElement = document.getElementById('root');
-		let allNotes:any[] = self.Model.get();
-		let result = self.Model.sort(value);
-		let noteList = new NoteList();
-		let note = new Note();
-
-		noteList.clearNoteList(self.hideNote.bind(self));
-		
+	searchNote(noteList: any, value: string) :void {
+		let allNotes:any[] = this.Model.get();
+		let result = this.Model.sort(value);
+		let list = noteList;
+		noteList.clearNoteList();	
 		if (value.length !== 0) {
-			result.map((item:any) => {
-				let template = note.render(item, self.deleteNote.bind(self));
-				self.View.addElement(root, template);
+			result.map((elem:any) => {
+				let item = new Note(elem, this.deleteNote.bind(this));
 			});
 		} else {
-			allNotes.map((item:any) => {
-				let template = note.render(item, self.deleteNote.bind(self));
-				self.View.addElement(root, template);	
+			allNotes.map((elem:any) => {
+				let item = new Note(elem, this.deleteNote.bind(this));
 			});
 		} 
-		self.layout();
+		this.layoutReload();
 	}
 
-	renderDate():void {
-		let self = this;
-		let root:HTMLElement = document.getElementById('date-container');
-		let date = new DateComponent();
-		let template = date.render();
-		self.View.addElement(root, template);
+	addSearchEvent(noteList: any):void {
+		let searchInput:HTMLElement = document.getElementById('search-input');
+		searchInput.addEventListener('input', (e) => {
+			let value = (<HTMLSelectElement>e.target).value;
+			this.searchNote(noteList, value);
+		});
+	}
+
+	layoutReload(): void {
+		this.Masonry.reloadItems();
+		this.Masonry.layout();
+	}
+
+	modalControl() {
+		let openButton = document.getElementById('modal-open');
+		let child = new AddNoteForm({ event: this.addNote.bind(this)});
+		openButton.addEventListener('click', function(e) {
+			let modal = new Modal(child.getTemplate());
+			child.placeholderControl();
+			child.focusFieldControl();
+		});
 	}
 }

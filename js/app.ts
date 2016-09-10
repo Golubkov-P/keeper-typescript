@@ -1,8 +1,6 @@
 import {Controller} from './Controller';
 import {Model} from './Model';
-import {Store} from './store';
-import {Template} from './template';
-import {View} from './View';
+
 
 class Keeper {
 	store: any;
@@ -12,11 +10,8 @@ class Keeper {
 	controller: any;
 	masonry: any;
 	constructor() {
-		this.store = new Store('note-app-store');
-		this.model = new Model(this.store);
-		this.template = new Template();
-		this.view = new View(this.template);
-		this.controller = new Controller(this.model, this.view);
+		this.model = new Model();
+		this.controller = new Controller(this.model);
 	}
 }
 let KeeperApp = new Keeper();

@@ -1,3 +1,5 @@
+/*import {Template} from './template';
+
 export class View {
 	template: any;
 	notesBlock: HTMLElement;
@@ -9,7 +11,7 @@ export class View {
 	modalClose: HTMLElement;
 
 	constructor(template:any) {
-		this.template = template;
+		this.template = new Template();
 		this.notesBlock = document.getElementById('root');
 		this.inputTitle = document.getElementById('note-input__title');
 		this.inputText = document.getElementById('note-input__text');
@@ -20,10 +22,9 @@ export class View {
 	}
 
 	addElement(parent:HTMLElement, template: any): void {
-		let self = this;
-		let newChild = self.template.createElement(template);
-		self.template.render(parent, newChild);
-		self.modal.className = 'modal';
+		let newChild = this.template.createElement(template);
+		this.template.render(parent, newChild);
+		this.modal.className = 'modal';
 	}
 
 	deleteElement(parent:HTMLElement, item: HTMLElement): void {
@@ -93,4 +94,4 @@ export class View {
 			});
 		}
 	}
-}
+}*/

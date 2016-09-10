@@ -1,7 +1,9 @@
+import {Store} from './date/store';
+
 export class Model {
 	Store:any;
-	constructor(Store:any) {
-		this.Store = Store;
+	constructor() {
+		this.Store = new Store('note-app-store');
 	}
 	save(content: any): void {
 		this.Store.add(content);

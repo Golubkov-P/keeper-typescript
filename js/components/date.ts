@@ -1,6 +1,13 @@
-export class DateComponent {
-	constructor() {
+import {DOMElement} from '../DOMElement';
 
+export class DateComponent extends DOMElement {
+	parent:HTMLElement;
+	template: any;
+	constructor() {
+		super();
+		this.parent = document.getElementById('date-container');
+		this.template = this.getTemplate();
+		this.render(this.parent, this.template);
 	}
 
 	createDate():any {
@@ -59,10 +66,8 @@ export class DateComponent {
 		return months[month] + ' ' + year;
 	}
 
-	render():any {
-		let helper: any = function(type: string, props: any, children: any) {
-			return { type: type, props: props, children: children }
-		};
+	getTemplate():any {
+		let helper = this.helperFunc;
 		let fullDay = this.returnFullDay();
 		let Date = this.returnMonthWithYear();
 		const template:any = (
@@ -72,5 +77,12 @@ export class DateComponent {
 			])
 		);
 		return template;
+	}
+
+	renderElement() {
+		const parent = this.parent;
+		const elem = this.createElement(this.getTemplate());
+
+		this.render(parent, elem);
 	}
 }

@@ -1,6 +1,10 @@
-export class Template {
+export class DOMElement {
 	constructor() {
+ 
+	}
 
+	helperFunc(type: string, props: any, children: any):any {
+		return { type: type, props: props, children: children }
 	}
 
 	setProp(elem: HTMLElement, name: string, prop: string): void {
@@ -54,11 +58,15 @@ export class Template {
 		.forEach(function(item:any) {
 			elem.appendChild(item);
 		});
-
 		return elem
 	}
 
-	render(parent:HTMLElement, newChild:HTMLElement): void {
-		parent.insertBefore(newChild, parent.firstChild);
+	deleteElement(parent:HTMLElement, item: HTMLElement): void {
+		parent.removeChild(item);
+	}
+
+	render(parent:HTMLElement, newChild:any): void {
+		let child = this.createElement(newChild);
+		parent.insertBefore(child, parent.firstChild);
 	}
 }

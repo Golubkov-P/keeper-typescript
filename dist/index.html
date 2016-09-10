@@ -8,22 +8,7 @@
 	<link rel="stylesheet" href="style/font-awesome.min.css">
 </head>
 <body>
-	<div id="modal" class="modal">
-		<div class="modal__content">
-			<div id="modal-close" class="modal-close">
-				<i class="fa fa-close" aria-hidden="true"></i>
-			</div>
-			<div class="input-wrapper">
-			<div class="input-text__title">Заголовок заметки</div>
-				<div contenteditable="true" id="note-input__title" class="note-input__title"></div>
-			</div>
-			<div class="input-wrapper">
-				<div class="input-text__text">Текст заметки</div>
-				<div contenteditable="true" id="note-input__text" class="note-input__text"></div>
-			</div>
-			<button id="add-button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-		</div>
-	</div>
+	<div class="wrapper">
 	<header class="header">
 		<div class="content clearfix">
 			<div id="date-container">
@@ -38,16 +23,28 @@
 				<input id="search-input" type="text" class="tools-search__input" placeholder="Search for notes..">
 			</div>
 			<div class="tools-add">
-				<p class="tools-add__text">Add note</p>
 				<button id="modal-open"><i class="fa fa-plus" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
 	
-	<div id="app">
-		
+	<div id="app-wrap">
+		<div id="app"></div>
 	</div>
 
+	</div>
+	<footer class="footer">
+		<div class="content">
+			<div class="footer__text-wrap">
+				<p class="footer__text">
+					Made with <i class="fa fa-heart heart-icon" aria-hidden="true"></i> by @golubkovpavel
+				</p>
+				<p class="footer__text">
+					<a href='https://github.com/Golubkov-P/keeper-typescript' target="_blank" class="footer__link">GitHub</a>
+				</p>
+			</div>
+		</div>
+	</footer>
 	<script src="vendor/masonry.pkgd.min.js"></script>
 	<script src="app.js"></script>
 </body>
